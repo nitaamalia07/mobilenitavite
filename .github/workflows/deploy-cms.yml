@@ -16,14 +16,14 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '16'  # Sesuaikan dengan versi Node.js yang kamu pakai
+        node-version: '18'  # GANTI ke 18
 
     - name: Install dependencies
-      run: npm install  # Atau yarn install jika menggunakan Yarn
+      run: npm install
 
-   - name: Build project
-     run: NODE_OPTIONS=--experimental-global-webcrypto npm run build
-  
+    - name: Build project
+      run: NODE_OPTIONS=--experimental-global-webcrypto npm run build
+
     - name: Install Vercel CLI
       run: npm install -g vercel
 
