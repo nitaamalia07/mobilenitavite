@@ -21,9 +21,9 @@ jobs:
     - name: Install dependencies
       run: npm install  # Atau yarn install jika menggunakan Yarn
 
-    - name: Build project
-      run: npm run build  # Atau perintah build lain jika menggunakan script lain
-
+   - name: Build project
+     run: NODE_OPTIONS=--experimental-global-webcrypto npm run build
+  
     - name: Install Vercel CLI
       run: npm install -g vercel
 
