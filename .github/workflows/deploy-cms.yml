@@ -1,0 +1,34 @@
+name: Deploy CMS to Vercel
+
+on:
+  push:
+    branches:
+      - main  # Bisa disesuaikan dengan branch yang kamu gunakan
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'  # Sesuaikan dengan versi Node.js yang kamu pakai
+
+    - name: Install dependencies
+      run: npm install  # Atau yarn install jika menggunakan Yarn
+
+    - name: Build project
+      run: npm run build  # Atau perintah build lain jika menggunakan script lain
+
+    - name: Deploy to Vercel
+      env:
+        VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}  # Jika null, cukup kosongkan
+      run: |
+        npm install -g vercel
+        vercel --prod --token $VERCEL_TOKEN --project $VERCEL_PROJECT_ID --org $VERCEL_ORG_ID
