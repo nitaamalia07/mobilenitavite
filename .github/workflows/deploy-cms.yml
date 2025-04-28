@@ -2,8 +2,8 @@ name: Deploy CMS to Vercel
 
 on:
   push:
-    branches:
-      - main  # Bisa disesuaikan dengan branch yang kamu gunakan
+    tags:
+      - 'v*'  # Akan dijalankan saat ada push tag baru dengan awalan "v" (misal: v1.0.0)
 
 jobs:
   build-and-deploy:
@@ -24,11 +24,12 @@ jobs:
     - name: Build project
       run: npm run build  # Atau perintah build lain jika menggunakan script lain
 
+    - name: Install Vercel CLI
+      run: npm install -g vercel
+
     - name: Deploy to Vercel
       env:
         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-       
       run: |
-        npm install -g vercel
-        vercel --prod --token $VERCEL_TOKEN --project $VERCEL_PROJECT_ID --org $VERCEL_ORG_ID
+        vercel --prod --token $VERCEL_TOKEN --project $VERCEL_PROJECT_ID
